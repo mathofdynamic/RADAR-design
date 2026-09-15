@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/* Farhang Font Family Integration */
+@font-face {
+  font-family: 'Farhang';
+  src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWBgpU7cJKAFX4yvLPVJuZIR32w0NtCHDQUWn9') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Farhang';
+  src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWvIzf0wgMpamP0ofXLCZx1UeJ2gY9cjNA3yn7') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Farhang';
+  src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWahzdbGV7nKCWNQtX5A9MYsSFDeirbP10oRIw') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Farhang';
+  src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWhqG6dZOAlZL69DT4GrqQnpw5RSEbseBMNOYj') format('woff2');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Farhang-Sharp';
+  src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWBgpU7cJKAFX4yvLPVJuZIR32w0NtCHDQUWn9') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Farhang-Num';
+  src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWXBmPURsbb2UQgskAY6W4fi70pnGOZ3NjKeRB') format('woff2');
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-editorial: 'Farhang', 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Strict editorial RTL typography defaults */
+  html {
+    direction: rtl;
+    text-align: right;
+  }
+
+  body {
+    font-family: var(--font-editorial);
+    color: #000000;
+    background-color: #ffffff;
+    direction: rtl;
+    text-align: right;
+    letter-spacing: -0.015em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Farhang', 'Vazirmatn', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  /* Completely eliminate monospace fonts everywhere across the application */
+  code, kbd, samp, pre, .font-mono {
+    font-family: 'Farhang', 'Vazirmatn', sans-serif !important;
+  }
+}
+
+.font-headline {
+  font-family: 'Farhang', 'Vazirmatn', sans-serif;
+}
+
+.font-display-masthead {
+  font-family: 'Farhang', 'Vazirmatn', sans-serif;
+  font-weight: 900;
+}
+
+.font-article-body {
+  font-family: 'Farhang', 'Vazirmatn', sans-serif;
+  line-height: 1.8;
+}
+
+.font-sans-editorial {
+  font-family: 'Farhang', 'Vazirmatn', sans-serif;
+}
+
+.font-rtl-persian {
+  font-family: 'Farhang', 'Vazirmatn', sans-serif;
+}
+
+/* Persian editorial lead letter/dropcap for RTL */
+.editorial-lead-dropcap::first-letter {
+  font-family: 'Farhang', sans-serif;
+  float: right;
+  font-size: 3.75rem;
+  line-height: 0.85;
+  padding-top: 4px;
+  padding-left: 14px;
+  padding-bottom: 2px;
+  font-weight: 900;
+  color: #000000;
+}
+
+/* Micro-rule divider */
+.hairline-b {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.hairline-t {
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.hairline-r {
+  border-right: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.hairline-l {
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.double-rule-b {
+  border-bottom: 3px double rgba(0, 0, 0, 0.85);
+}
+
+.double-rule-t {
+  border-top: 3px double rgba(0, 0, 0, 0.85);
+}
+
+/* Editorial image treatment with vibrant, authentic full colors (no grayscale) */
+.editorial-img-contrast {
+  filter: contrast(102%) saturate(104%);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.editorial-img-contrast:hover {
+  filter: contrast(105%) saturate(108%);
+}
+
+/* Hide scrollbar for compact ticker scanning while retaining scroll ability */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

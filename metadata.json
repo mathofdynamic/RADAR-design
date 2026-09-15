@@ -1,0 +1,6 @@
+{
+  "name": "رادار",
+  "description": "پایگاه خبری-تحلیلی مستقل، معتبر و حقیقت‌محور رادار با رویکرد ژورنالیسم تحقیقی، تحلیل‌های راهبردی و ساختار بصری مینیمال سیاه‌وسفید.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
