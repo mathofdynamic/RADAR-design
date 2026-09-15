@@ -141,21 +141,22 @@ export default function App() {
         />
       )}
 
-      {/* MAIN VIEWPORT ROUTER WITH 200ms ENTRANCE MOTION */}
+      {/* MAIN VIEWPORT ROUTER WITH REFINED EDITORIAL MOTION */}
       <main className="flex-1 w-full">
         <AnimatePresence mode="wait">
           {currentView.type === 'home' && (
             <motion.div
               key="view-home"
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
+              transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
               className="space-y-4"
             >
-              {/* 1. Asymmetric Hero Editorial Area */}
+              {/* 1. Asymmetric Hero Editorial Area with Lead Story Rotation */}
               <HeroEditorial
                 leadArticle={leadStory}
+                leadArticles={[leadStory, secondaryStories[0], secondaryStories[1]].filter(Boolean)}
                 secondaryArticles={secondaryStories}
                 onSelectArticle={(slug) => navigate({ type: 'article', articleSlug: slug })}
                 onToggleSave={toggleSave}
@@ -168,7 +169,7 @@ export default function App() {
                 onSelectArticle={(slug) => navigate({ type: 'article', articleSlug: slug })}
               />
 
-              {/* 3. Controlled Editorial Category Sections */}
+              {/* 3. Controlled Editorial Category Sections with Viewport Reveals */}
               <CategorySections
                 articles={ARTICLES}
                 onSelectArticle={(slug) => navigate({ type: 'article', articleSlug: slug })}
@@ -183,7 +184,7 @@ export default function App() {
                 onSelectArticle={(slug) => navigate({ type: 'article', articleSlug: slug })}
               />
 
-              {/* 5. Most Read 01–05 Section */}
+              {/* 5. Most Read 01–05 Section with Sequential Numeral Reveals */}
               <MostReadSection
                 articles={ARTICLES}
                 onSelectArticle={(slug) => navigate({ type: 'article', articleSlug: slug })}

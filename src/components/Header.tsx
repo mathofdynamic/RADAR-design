@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { CategorySlug, ViewState } from '../types';
 import { CATEGORIES } from '../data/articles';
 import { Search, Bookmark, Menu, X, ArrowUp } from 'lucide-react';
@@ -12,6 +12,17 @@ interface HeaderProps {
   onOpenIntelligence: () => void;
   onOpenRssModal: () => void;
 }
+
+const STRATEGIC_TICKER_ITEMS = [
+  { label: 'نفت خام برنت', value: '۷۸.۴۰ $', change: '+۰.۸٪', positive: true },
+  { label: 'طلای جهانی انس', value: '۲,۶۴۰ $', change: '-۰.۲٪', positive: false },
+  { label: 'اوراق قرضه ۱۰ ساله', value: '۴.۲۸٪', change: '+۰.۰۳', positive: true },
+  { label: 'فلزات استراتژیک و لیتیوم', value: '۱۸۴.۲', change: '+۱.۱٪', positive: true },
+  { label: 'گاز طبیعی TTF اروپا', value: '۳۶.۵۰ €', change: '+۱.۵٪', positive: true },
+  { label: 'شاخص کانتینری شانگهای', value: '۲,۳۸۰', change: '-۰.۴٪', positive: false },
+  { label: 'تنگه هرمز و دریای سرخ', value: 'وضعیت تردد امنیتی', change: 'سطح ۳', positive: false },
+  { label: 'نرخ تنزیل فدرال', value: '۵.۲۵٪', change: 'تثبیت', positive: true },
+];
 
 export const Header: React.FC<HeaderProps> = ({
   currentView,
@@ -30,7 +41,7 @@ export const Header: React.FC<HeaderProps> = ({
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 150);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -63,22 +74,48 @@ export const Header: React.FC<HeaderProps> = ({
     <motion.header
       initial={{ opacity: 0, y: -4 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
       className="w-full bg-white text-black font-sans-editorial select-none"
       dir="rtl"
     >
-      {/* Top Strategic Indices & Wire Ticker (Clean, icon-free typography) */}
-      <div className="w-full bg-black text-white text-[11px] font-sans-editorial py-1 px-4 sm:px-8 border-b border-zinc-900">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-5 overflow-x-auto no-scrollbar py-0.5">
-            <span className="font-bold tracking-wider text-zinc-300">شاخص‌های راهبردی:</span>
-            <span className="text-zinc-300">نفت برنت: <strong className="text-white font-medium">۷۸.۴۰ $</strong> (+۰.۸٪)</span>
-            <span className="text-zinc-300">طلای جهانی: <strong className="text-white font-medium">۲,۶۴۰ $</strong> (-۰.۲٪)</span>
-            <span className="text-zinc-300">اوراق قرضه ۱۰ ساله: <strong className="text-white font-medium">۴.۲۸٪</strong></span>
-            <span className="text-zinc-300 hidden lg:inline">فلزات استراتژیک: <strong className="text-white font-medium">۱۸۴.۲</strong> (+۱.۱٪)</span>
+      {/* Top Strategic Indices & Infinite Continuous Wire Ticker (Bloomberg/FT Style) */}
+      <div className="w-full bg-black text-white text-[11px] font-sans-editorial py-1.5 px-4 sm:px-8 border-b border-zinc-900 overflow-hidden">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          {/* Static Title Badge */}
+          <div className="shrink-0 flex items-center gap-2 pl-3 border-l border-zinc-800 text-zinc-300">
+            <span className="w-1.5 h-1.5 bg-zinc-300 rounded-full animate-pulse"></span>
+            <span className="font-bold tracking-wider text-[10px] uppercase text-zinc-300 whitespace-nowrap">
+              شاخص‌های راهبردی:
+            </span>
           </div>
 
-          <div className="flex items-center gap-3 text-xs font-sans-editorial">
+          {/* Continuous Running Ticker Track (GPU transform, seamless infinite loop) */}
+          <div className="flex-1 overflow-hidden relative mask-fade" dir="ltr">
+            <div className="animate-ticker items-center gap-8 py-0.5 whitespace-nowrap" tabIndex={0}>
+              {/* Render items list twice for seamless jump-free loop */}
+              {[...STRATEGIC_TICKER_ITEMS, ...STRATEGIC_TICKER_ITEMS].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="inline-flex items-center gap-2 text-zinc-300 text-[11px] px-2"
+                  dir="rtl"
+                >
+                  <span className="text-zinc-400">{item.label}:</span>
+                  <strong className="text-white font-medium">{item.value}</strong>
+                  <span
+                    className={`text-[10px] font-mono-editorial ${
+                      item.positive ? 'text-zinc-300' : 'text-zinc-400'
+                    }`}
+                  >
+                    ({item.change})
+                  </span>
+                  <span className="text-zinc-700 mr-2">•</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick Utility Desks */}
+          <div className="shrink-0 hidden sm:flex items-center gap-3 text-xs font-sans-editorial pr-3 border-r border-zinc-800">
             <button
               onClick={onOpenRssModal}
               className="text-zinc-400 hover:text-white transition-colors cursor-pointer text-[11px]"
@@ -182,7 +219,7 @@ export const Header: React.FC<HeaderProps> = ({
             <li>
               <button
                 onClick={() => onNavigate({ type: 'home' })}
-                className={`py-0.5 transition-colors cursor-pointer ${
+                className={`py-0.5 transition-colors cursor-pointer editorial-link-hover ${
                   currentView.type === 'home'
                     ? 'text-black font-black border-b-2 border-black'
                     : 'text-zinc-600 hover:text-black'
@@ -195,7 +232,7 @@ export const Header: React.FC<HeaderProps> = ({
               <li key={cat.slug}>
                 <button
                   onClick={() => onNavigate({ type: 'category', categorySlug: cat.slug })}
-                  className={`py-0.5 transition-colors cursor-pointer ${
+                  className={`py-0.5 transition-colors cursor-pointer editorial-link-hover ${
                     activeCategory === cat.slug
                       ? 'text-black font-black border-b-2 border-black'
                       : 'text-zinc-600 hover:text-black'
@@ -209,128 +246,147 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </nav>
 
-      {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-b-2 border-black bg-white p-4 space-y-3">
-          <form onSubmit={handleSearchSubmit} className="relative pb-2">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="جست‌وجو در آرشیو گزارش‌ها..."
-              className="w-full pr-8 pl-3 py-2 text-xs border border-zinc-300 focus:border-black focus:outline-none"
-            />
-            <Search className="w-4 h-4 text-zinc-400 absolute right-2.5 top-2.5" />
-          </form>
+      {/* Mobile Drawer Menu with Staggered Entrance */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="overflow-hidden md:hidden border-b-2 border-black bg-white p-4 space-y-3"
+          >
+            <form onSubmit={handleSearchSubmit} className="relative pb-2">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="جست‌وجو در آرشیو گزارش‌ها..."
+                className="w-full pr-8 pl-3 py-2 text-xs border border-zinc-300 focus:border-black focus:outline-none"
+              />
+              <Search className="w-4 h-4 text-zinc-400 absolute right-2.5 top-2.5" />
+            </form>
 
-          <div className="space-y-1">
-            <button
-              onClick={() => {
-                onNavigate({ type: 'home' });
-                setMobileMenuOpen(false);
-              }}
-              className="block w-full text-right py-1.5 text-xs font-bold text-black border-b border-zinc-100"
-            >
-              صفحه نخست
-            </button>
-            {CATEGORIES.map((cat) => (
+            <div className="space-y-1">
               <button
-                key={cat.slug}
                 onClick={() => {
-                  onNavigate({ type: 'category', categorySlug: cat.slug });
+                  onNavigate({ type: 'home' });
                   setMobileMenuOpen(false);
                 }}
-                className={`block w-full text-right py-1.5 text-xs border-b border-zinc-100 ${
-                  activeCategory === cat.slug ? 'font-black text-black' : 'text-zinc-600'
-                }`}
+                className="block w-full text-right py-1.5 text-xs font-bold text-black border-b border-zinc-100"
               >
-                {cat.name}
+                صفحه نخست
               </button>
-            ))}
-          </div>
-
-          <div className="pt-2 flex items-center justify-between text-xs text-zinc-600">
-            <button
-              onClick={() => {
-                onOpenIntelligence();
-                setMobileMenuOpen(false);
-              }}
-              className="font-bold text-black"
-            >
-              میز تحلیل هوشمند
-            </button>
-            <button
-              onClick={() => {
-                onOpenRssModal();
-                setMobileMenuOpen(false);
-              }}
-            >
-              خوراک RSS
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Sticky Compact Header for Fast Scanning */}
-      {isScrolled && (
-        <div className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xs border-b border-black py-2 px-4 sm:px-8 shadow-xs animate-in fade-in duration-200">
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <div className="flex items-center gap-6">
-              <span
-                onClick={() => onNavigate({ type: 'home' })}
-                className="font-display-masthead font-black text-2xl tracking-tight text-black cursor-pointer hover:opacity-80"
-              >
-                رادار
-              </span>
-              <div className="hidden sm:flex items-center gap-4 text-xs font-sans-editorial text-zinc-600">
-                <button
-                  onClick={() => onNavigate({ type: 'home' })}
-                  className="hover:text-black cursor-pointer"
+              {CATEGORIES.map((cat, idx) => (
+                <motion.button
+                  key={cat.slug}
+                  initial={{ opacity: 0, x: -6 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.025, duration: 0.2 }}
+                  onClick={() => {
+                    onNavigate({ type: 'category', categorySlug: cat.slug });
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`block w-full text-right py-1.5 text-xs border-b border-zinc-100 ${
+                    activeCategory === cat.slug ? 'font-black text-black' : 'text-zinc-600'
+                  }`}
                 >
-                  صفحه نخست
-                </button>
-                {CATEGORIES.slice(0, 5).map((c) => (
+                  {cat.name}
+                </motion.button>
+              ))}
+            </div>
+
+            <div className="pt-2 flex items-center justify-between text-xs text-zinc-600">
+              <button
+                onClick={() => {
+                  onOpenIntelligence();
+                  setMobileMenuOpen(false);
+                }}
+                className="font-bold text-black"
+              >
+                میز تحلیل هوشمند
+              </button>
+              <button
+                onClick={() => {
+                  onOpenRssModal();
+                  setMobileMenuOpen(false);
+                }}
+              >
+                خوراک RSS
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Sticky Compact Header for Fast Scanning with Smooth Motion Entrance */}
+      <AnimatePresence>
+        {isScrolled && (
+          <motion.div
+            initial={{ y: '-100%', opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: '-100%', opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+            className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xs border-b border-black py-2 px-4 sm:px-8 shadow-xs"
+          >
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+              <div className="flex items-center gap-6">
+                <span
+                  onClick={() => onNavigate({ type: 'home' })}
+                  className="font-display-masthead font-black text-2xl tracking-tight text-black cursor-pointer hover:opacity-80"
+                >
+                  رادار
+                </span>
+                <div className="hidden sm:flex items-center gap-4 text-xs font-sans-editorial text-zinc-600">
                   <button
-                    key={c.slug}
-                    onClick={() => onNavigate({ type: 'category', categorySlug: c.slug })}
-                    className="hover:text-black cursor-pointer"
+                    onClick={() => onNavigate({ type: 'home' })}
+                    className="hover:text-black cursor-pointer editorial-link-hover"
                   >
-                    {c.name}
+                    صفحه نخست
                   </button>
-                ))}
+                  {CATEGORIES.slice(0, 5).map((c) => (
+                    <button
+                      key={c.slug}
+                      onClick={() => onNavigate({ type: 'category', categorySlug: c.slug })}
+                      className="hover:text-black cursor-pointer editorial-link-hover"
+                    >
+                      {c.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => onNavigate({ type: 'search' })}
+                  className="p-1 text-zinc-600 hover:text-black cursor-pointer"
+                  title="جست‌وجو"
+                >
+                  <Search className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={onOpenSaved}
+                  className="flex items-center gap-1 text-xs font-bold text-black hover:opacity-80 cursor-pointer"
+                >
+                  <Bookmark className="w-4 h-4" />
+                  {savedCount > 0 && (
+                    <span className="bg-black text-white text-[10px] px-1.5 py-0.2 rounded-xs">
+                      {savedCount}
+                    </span>
+                  )}
+                </button>
+                <button
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className="p-1 text-zinc-500 hover:text-black cursor-pointer"
+                  title="بازگشت به بالا"
+                >
+                  <ArrowUp className="w-4 h-4" />
+                </button>
               </div>
             </div>
-
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => onNavigate({ type: 'search' })}
-                className="p-1 text-zinc-600 hover:text-black cursor-pointer"
-                title="جست‌وجو"
-              >
-                <Search className="w-4 h-4" />
-              </button>
-              <button
-                onClick={onOpenSaved}
-                className="flex items-center gap-1 text-xs font-bold text-black hover:opacity-80 cursor-pointer"
-              >
-                <Bookmark className="w-4 h-4" />
-                {savedCount > 0 && (
-                  <span className="bg-black text-white text-[10px] px-1.5 py-0.2 rounded-xs">
-                    {savedCount}
-                  </span>
-                )}
-              </button>
-              <button
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="p-1 text-zinc-500 hover:text-black cursor-pointer"
-                title="بازگشت به بالا"
-              >
-                <ArrowUp className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 };
