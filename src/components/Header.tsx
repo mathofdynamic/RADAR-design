@@ -146,41 +146,37 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Masthead Branding Centerpiece */}
-        <div className="text-center py-2 sm:py-3 space-y-1">
-          <h1
-            id="brand-masthead"
-            onClick={() => onNavigate({ type: 'home' })}
-            className="font-display-masthead text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-black cursor-pointer tracking-tight leading-none hover:opacity-95 transition-opacity inline-block font-black"
-          >
-            رادار
-          </h1>
-          <div className="text-xs sm:text-sm text-zinc-700 font-sans-editorial max-w-xl mx-auto tracking-normal">
-            نشریه مستقل و حقیقت‌محور رویدادهای راهبردی، ژئوپلیتیک و ژورنالیسم تحقیقی
-          </div>
-        </div>
-
-        {/* Search & Fast Access Bar */}
-        <div className="mt-4 pt-2 border-t border-zinc-200 flex items-center justify-between gap-4">
-          <form onSubmit={handleSearchSubmit} className="relative flex-1 max-w-md">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="جست‌وجو در آرشیو گزارش‌ها، اسناد و پرونده‌ها..."
-              className="w-full pr-8 pl-3 py-1.5 text-xs font-sans border border-zinc-300 focus:border-black focus:outline-none transition-colors bg-white placeholder:text-zinc-500"
-            />
-            <button
-              type="submit"
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-black cursor-pointer"
-              title="اجرای جست‌وجو"
+        {/* Compact Branding & Search Bar */}
+        <div className="py-2 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-5 flex-1">
+            <h1
+              id="brand-masthead"
+              onClick={() => onNavigate({ type: 'home' })}
+              className="font-display-masthead text-2xl sm:text-3xl font-black text-black cursor-pointer tracking-tight leading-none hover:opacity-80 transition-opacity shrink-0 select-none"
             >
-              <Search className="w-3.5 h-3.5" />
-            </button>
-          </form>
+              رادار
+            </h1>
+
+            <form onSubmit={handleSearchSubmit} className="relative flex-1 max-w-md">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="جست‌وجو در آرشیو گزارش‌ها، اسناد و پرونده‌ها..."
+                className="w-full pr-8 pl-3 py-1.5 text-xs font-sans border border-zinc-300 focus:border-black focus:outline-none transition-colors bg-white placeholder:text-zinc-500"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-black cursor-pointer"
+                title="اجرای جست‌وجو"
+              >
+                <Search className="w-3.5 h-3.5" />
+              </button>
+            </form>
+          </div>
 
           {/* Quick Desks Indicator */}
-          <div className="hidden md:flex items-center gap-4 text-xs font-sans-editorial text-zinc-600">
+          <div className="hidden md:flex items-center gap-4 text-xs font-sans-editorial text-zinc-600 shrink-0">
             <span className="text-[11px] uppercase tracking-wider text-zinc-700">نسخه دیجیتال:</span>
             <span className="font-bold text-black">شماره امروز — چاپ بامدادی</span>
           </div>
