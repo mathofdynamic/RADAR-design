@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ViewState } from '../types';
 import { CATEGORIES } from '../data/articles';
-import { Rss, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (view: ViewState) => void;
@@ -40,9 +40,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenRssModal }) =>
           <div className="flex items-center gap-6 text-xs text-zinc-400">
             <button
               onClick={onOpenRssModal}
-              className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
+              className="hover:text-white transition-colors cursor-pointer"
             >
-              <Rss className="w-3.5 h-3.5" />
               <span>خوراک خبرخوان (RSS)</span>
             </button>
             <button

@@ -36,9 +36,8 @@ export const SavedArticlesView: React.FC<SavedArticlesViewProps> = ({
         </button>
 
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <h1 className="font-headline font-black text-3xl sm:text-5xl uppercase tracking-tight text-black flex items-center gap-3">
-            <BookOpen className="w-8 h-8 text-black" />
-            <span>فهرست مطالعه شخصی</span>
+          <h1 className="font-headline font-black text-3xl sm:text-4xl uppercase tracking-tight text-black">
+            فهرست مطالعه شخصی
           </h1>
 
           {savedArticles.length > 0 && (

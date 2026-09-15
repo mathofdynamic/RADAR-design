@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Article } from '../types';
-import { Bookmark, Clock } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 
 interface HeroEditorialProps {
   leadArticle: Article;
@@ -23,26 +23,23 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
-      className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-8"
+      className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-5 sm:py-7"
       dir="rtl"
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
         {/* Dominant Lead Story (8 cols) */}
         <article className="lg:col-span-8 space-y-4">
-          {/* Metadata & Desk Label */}
+          {/* Metadata & Desk Label (No decorative clock icon) */}
           <div className="flex items-center justify-between text-xs text-zinc-600 font-sans-editorial border-b border-zinc-200 pb-1.5">
             <div className="flex items-center gap-2">
-              <span className="font-bold uppercase tracking-wider text-black">
+              <span className="font-black uppercase tracking-wider text-black">
                 {leadArticle.category}
               </span>
-              <span>/</span>
+              <span className="text-zinc-400">/</span>
               <span className="text-zinc-600">{leadArticle.subcategory}</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1">
-                <Clock className="w-3 h-3 text-zinc-500" />
-                <span>{leadArticle.readTime}</span>
-              </span>
+              <span className="text-zinc-500">{leadArticle.readTime}</span>
               <button
                 onClick={() => onToggleSave(leadArticle.id)}
                 className="hover:text-black transition-colors cursor-pointer flex items-center gap-1 text-[11px]"
@@ -50,7 +47,7 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
               >
                 <Bookmark
                   className={`w-3.5 h-3.5 ${
-                    isSaved(leadArticle.id) ? 'fill-black text-black' : 'text-zinc-500'
+                    isSaved(leadArticle.id) ? 'fill-black text-black' : 'text-zinc-400'
                   }`}
                 />
                 <span className="hidden sm:inline">
@@ -60,10 +57,10 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
             </div>
           </div>
 
-          {/* Monumental Headline */}
+          {/* Monumental Lead Headline */}
           <h2
             onClick={() => onSelectArticle(leadArticle.slug)}
-            className="font-headline font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] text-black leading-[1.12] tracking-tight cursor-pointer hover:underline underline-offset-4 decoration-2"
+            className="font-headline font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] text-black leading-[1.12] tracking-tight cursor-pointer hover:underline underline-offset-4 decoration-2"
           >
             {leadArticle.title}
           </h2>
@@ -74,16 +71,16 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
           </p>
 
           {/* Author Byline */}
-          <div className="text-xs font-sans-editorial text-zinc-600 pt-1">
-            <span>نویسنده: </span>
-            <strong className="text-black font-semibold">{leadArticle.author.name}</strong>
+          <div className="text-xs font-sans-editorial text-zinc-600 pt-0.5">
+            <span>به قلم </span>
+            <strong className="text-black font-bold">{leadArticle.author.name}</strong>
             <span className="text-zinc-500"> — {leadArticle.author.role}</span>
             {leadArticle.author.location && (
               <span className="text-zinc-500 font-normal"> ({leadArticle.author.location})</span>
             )}
           </div>
 
-          {/* Dominant Editorial Photography (Full Rich Colors) */}
+          {/* Dominant Editorial Photography (Black-and-White art direction, revealing natural color on hover) */}
           {leadArticle.imageUrl && (
             <figure
               onClick={() => onSelectArticle(leadArticle.slug)}
@@ -93,7 +90,7 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
                 <img
                   src={leadArticle.imageUrl}
                   alt={leadArticle.title}
-                  className="w-full h-auto aspect-[16/9] object-cover editorial-img-contrast transition-transform duration-500 group-hover:scale-[1.01]"
+                  className="w-full h-auto aspect-[16/9] object-cover editorial-lead-img transition-all duration-200"
                   loading="eager"
                 />
               </div>
@@ -110,13 +107,13 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
             </figure>
           )}
 
-          {/* Key Executive Findings Callout */}
+          {/* Key Executive Findings Callout (Clean right rule, no heavy background box) */}
           {leadArticle.keyTakeaways && leadArticle.keyTakeaways.length > 0 && (
-            <div className="mt-4 p-4 sm:p-5 bg-zinc-50 border border-black space-y-2">
-              <div className="text-[11px] font-bold uppercase tracking-wider text-black">
+            <div className="my-5 border-r-2 border-black pr-4 py-1 space-y-1.5">
+              <div className="text-[11px] font-black uppercase tracking-wider text-black">
                 محورهای کلیدی راهبردی:
               </div>
-              <ul className="space-y-1.5 text-xs font-sans-editorial text-zinc-800 list-disc list-inside">
+              <ul className="space-y-1 text-xs font-sans-editorial text-zinc-800 list-disc list-inside">
                 {leadArticle.keyTakeaways.map((item, i) => (
                   <li key={i} className="leading-relaxed">
                     <span className="text-zinc-900">{item}</span>
@@ -128,8 +125,8 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
         </article>
 
         {/* Secondary Editorial Column (4 cols) with RTL divider hairline-r */}
-        <aside className="lg:col-span-4 lg:hairline-r lg:pr-8 space-y-6">
-          <div className="border-b-2 border-black pb-1 mb-4 flex items-baseline justify-between">
+        <aside className="lg:col-span-4 lg:hairline-r lg:pr-8 space-y-5">
+          <div className="border-b-2 border-black pb-1 mb-3 flex items-baseline justify-between">
             <h3 className="font-headline font-bold text-sm uppercase tracking-wider text-black">
               گزارش‌های اصلی و تحلیل‌های تکمیلی
             </h3>
@@ -138,11 +135,11 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
             </span>
           </div>
 
-          <div className="space-y-6 divide-y divide-zinc-200">
+          <div className="space-y-5 divide-y divide-zinc-200">
             {secondaryArticles.map((article, idx) => (
               <article
                 key={article.id}
-                className={`${idx > 0 ? 'pt-6' : ''} space-y-2 group`}
+                className={`${idx > 0 ? 'pt-5' : ''} space-y-2 group`}
               >
                 <div className="flex items-center justify-between text-[11px] uppercase tracking-wider text-zinc-500 font-sans-editorial">
                   <span className="font-bold text-black">{article.category}</span>
@@ -164,7 +161,7 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
 
                 <h4
                   onClick={() => onSelectArticle(article.slug)}
-                  className="font-headline font-bold text-lg sm:text-xl text-black leading-snug cursor-pointer group-hover:underline underline-offset-2"
+                  className="font-headline font-bold text-lg text-black leading-snug cursor-pointer group-hover:underline underline-offset-2"
                 >
                   {article.title}
                 </h4>
@@ -181,12 +178,12 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
                     <img
                       src={article.imageUrl}
                       alt={article.title}
-                      className="w-full h-28 object-cover editorial-img-contrast group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-28 object-cover editorial-img-contrast transition-all duration-200"
                     />
                   </div>
                 )}
 
-                <div className="text-[11px] text-zinc-500 font-sans-editorial pt-1">
+                <div className="text-[11px] text-zinc-500 font-sans-editorial pt-0.5">
                   به قلم {article.author.name}
                   {article.author.location ? ` — ${article.author.location}` : ''}
                 </div>
@@ -194,13 +191,13 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
             ))}
           </div>
 
-          {/* Editorial Wire Notice Box */}
-          <div className="p-4 bg-zinc-100 border border-zinc-300 text-xs font-sans-editorial space-y-1.5">
+          {/* Editorial Integrity Statement (Clean typographic rule, no gray box) */}
+          <div className="pt-4 border-t border-zinc-200 text-xs font-sans-editorial space-y-1">
             <div className="font-bold text-black uppercase tracking-wider text-[10px]">
-              اطلاعیه هیئت امنای تحریریه
+              اصول تحریریه رادار
             </div>
-            <p className="text-zinc-700 leading-relaxed text-[11px]">
-              کلیه گزارش‌های «رادار» بر پایه اسناد ثبتی، مصاحبه‌های مستقیم با منابع دست‌اول و انطباق با اصول بی‌طرفی ژورنالیسم تحقیقی منتشر می‌گردد.
+            <p className="text-zinc-600 leading-relaxed text-[11px]">
+              کلیه گزارش‌های «رادار» بر پایه اسناد ثبتی، مصاحبه‌های مستقیم با منابع دست‌اول و انطباق با منشور بی‌طرفی ژورنالیسم تحقیقی منتشر می‌گردد.
             </p>
           </div>
         </aside>

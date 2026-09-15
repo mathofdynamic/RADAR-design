@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { Article, CategorySlug } from '../types';
-import { Search, Bookmark, Clock, ArrowRight } from 'lucide-react';
+import { Search, Bookmark, ArrowRight } from 'lucide-react';
 import { CATEGORIES } from '../data/articles';
 
 interface SearchViewProps {
@@ -199,10 +199,7 @@ export const SearchView: React.FC<SearchViewProps> = ({
                   <span>{item.subcategory}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-zinc-400" />
-                    {item.readTime}
-                  </span>
+                  <span>{item.readTime}</span>
                   <button
                     onClick={() => onToggleSave(item.id)}
                     className="hover:text-black cursor-pointer"

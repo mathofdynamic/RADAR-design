@@ -18,26 +18,26 @@ export const NewsletterBlock: React.FC = () => {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
-      className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 font-sans-editorial"
+      className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-5 font-sans-editorial"
       dir="rtl"
     >
-      <div className="border border-black p-6 sm:p-8 bg-zinc-50 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="border-t-2 border-b-2 border-black py-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="max-w-xl space-y-1">
-          <div className="text-[10px] uppercase tracking-widest text-zinc-500 font-sans-editorial font-bold">
+          <div className="text-[10px] uppercase tracking-wider text-zinc-500 font-sans-editorial font-bold">
             گزارش بامدادی رادار
           </div>
-          <h4 className="font-headline font-black text-2xl text-black">
-            در جریان حقایق پنهان بمانید.
+          <h4 className="font-headline font-black text-xl sm:text-2xl text-black">
+            در جریان رویدادهای راهبردی بمانید
           </h4>
-          <p className="font-article-body text-sm text-zinc-700">
-            مهم‌ترین تحلیل‌های ژئوپلیتیک، گزیده پرونده‌های تحقیقی و تلکس‌های محرمانه، هر روز در طلیعه بامداد مستقیماً به ایمیل شما ارسال می‌شود.
+          <p className="font-article-body text-xs sm:text-sm text-zinc-700 leading-relaxed">
+            مهم‌ترین تحلیل‌های ژئوپلیتیک، گزیده پرونده‌های تحقیقی و تلکس‌های بامدادی، هر روز در طلیعه صبح به نشانی شما ارسال می‌شود.
           </p>
         </div>
 
         {submitted ? (
-          <div className="flex items-center gap-2 text-xs font-sans-editorial font-semibold text-black bg-white px-4 py-3 border border-black">
+          <div className="flex items-center gap-2 text-xs font-sans-editorial font-semibold text-black py-2">
             <Check className="w-4 h-4 text-black" />
-            <span>عضویت شما با موفقیت ثبت شد. نخستین گزیده تحلیلی ساعت ۰۶:۰۰ ارسال خواهد شد.</span>
+            <span>عضویت شما ثبت شد. گزیده تحلیلی فردا ساعت ۰۶:۰۰ ارسال خواهد شد.</span>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
@@ -46,12 +46,12 @@ export const NewsletterBlock: React.FC = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="نشانی ایمیل خود را وارد کنید..."
-              className="px-3 py-2 text-xs font-sans border border-black focus:outline-none w-full sm:w-72 bg-white text-right"
+              placeholder="نشانی ایمیل سازمانی یا فردی..."
+              className="px-3 py-1.5 text-xs font-sans border border-black focus:outline-none w-full sm:w-72 bg-white text-right placeholder:text-zinc-400"
             />
             <button
               type="submit"
-              className="px-5 py-2 text-xs font-sans-editorial font-bold tracking-wider bg-black text-white hover:bg-zinc-800 transition-colors cursor-pointer shrink-0"
+              className="px-4 py-1.5 text-xs font-sans-editorial font-bold tracking-wider bg-black text-white hover:bg-zinc-800 transition-colors cursor-pointer shrink-0"
             >
               عضویت در خبرنامه
             </button>

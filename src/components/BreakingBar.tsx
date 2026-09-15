@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft } from 'lucide-react';
 
 interface BreakingNewsItem {
   id: string;
@@ -20,23 +19,23 @@ export const BreakingBar: React.FC<BreakingBarProps> = ({ news, onSelectArticle 
       initial={{ opacity: 0, y: -4 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
-      className="w-full bg-zinc-100 border-b border-black text-black py-2 px-4 sm:px-8 font-sans-editorial"
+      className="w-full bg-white border-b border-zinc-300 text-black py-1.5 px-4 sm:px-8 font-sans-editorial"
       dir="rtl"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 text-xs">
-        <div className="flex items-center gap-3 overflow-hidden">
-          {/* Breaking badge */}
-          <span className="bg-black text-white px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider shrink-0">
+        <div className="flex items-center gap-2.5 overflow-hidden">
+          {/* Subtle text badge */}
+          <span className="font-bold text-black text-[11px] uppercase tracking-wider shrink-0 underline decoration-2 underline-offset-4">
             خبر فوری
           </span>
 
-          <span className="text-[11px] text-zinc-600 font-sans-editorial shrink-0 hidden sm:inline">
+          <span className="text-[11px] text-zinc-400 font-sans-editorial shrink-0 hidden sm:inline">
             [{news.timestamp}]
           </span>
 
           <p
             onClick={() => onSelectArticle(news.articleSlug)}
-            className="font-headline font-bold text-sm truncate hover:underline cursor-pointer tracking-tight"
+            className="font-headline font-bold text-xs sm:text-sm text-zinc-900 truncate hover:text-black hover:underline cursor-pointer tracking-tight"
           >
             {news.headline}
           </p>
@@ -44,10 +43,9 @@ export const BreakingBar: React.FC<BreakingBarProps> = ({ news, onSelectArticle 
 
         <button
           onClick={() => onSelectArticle(news.articleSlug)}
-          className="shrink-0 flex items-center gap-1 text-[11px] uppercase font-bold text-zinc-700 hover:text-black hover:underline cursor-pointer"
+          className="shrink-0 text-[11px] font-bold text-zinc-600 hover:text-black hover:underline cursor-pointer transition-colors"
         >
-          <span>مشروح گزارش</span>
-          <ArrowLeft className="w-3 h-3" />
+          مشروح گزارش ←
         </button>
       </div>
     </motion.div>

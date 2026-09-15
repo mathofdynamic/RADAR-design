@@ -87,16 +87,13 @@ export const EditorialIntelligenceModal: React.FC<EditorialIntelligenceModalProp
       >
         {/* Modal Header */}
         <div className="p-4 sm:p-6 bg-black text-white flex items-center justify-between border-b border-zinc-800">
-          <div className="flex items-center gap-3">
-            <Brain className="w-5 h-5 text-zinc-300" />
-            <div>
-              <h3 className="font-headline font-bold text-lg sm:text-xl text-white tracking-tight">
-                رادار — میز واکاوی تحلیلی و استراتژیک
-              </h3>
-              <p className="text-[11px] text-zinc-400 font-sans-editorial">
-                سنتز عمیق تحریریه • موتور: gemini-3.1-pro-preview (با استدلال تحلیلی عمیق)
-              </p>
-            </div>
+          <div>
+            <h3 className="font-headline font-bold text-lg sm:text-xl text-white tracking-tight">
+              رادار — میز واکاوی تحلیلی و استراتژیک
+            </h3>
+            <p className="text-[11px] text-zinc-400 font-sans-editorial">
+              سنتز عمیق تحریریه • موتور: gemini-3.1-pro-preview (با استدلال تحلیلی عمیق)
+            </p>
           </div>
           <button
             onClick={onClose}
@@ -107,18 +104,19 @@ export const EditorialIntelligenceModal: React.FC<EditorialIntelligenceModalProp
           </button>
         </div>
 
-        {/* Modal Body */}
-        <div className="p-4 sm:p-6 overflow-y-auto space-y-6 flex-1 text-black">
-          {currentArticle && (
-            <div className="p-3 bg-zinc-100 border-r-2 border-black text-xs space-y-1">
-              <span className="font-bold uppercase tracking-wider text-[10px] text-zinc-500">
-                زمینه پژوهشی فعال:
-              </span>
-              <div className="font-headline font-bold text-black text-sm truncate">
-                {currentArticle.title}
+        {/* Modal Body with scrollbar on right */}
+        <div className="overflow-y-auto flex-1 text-black" dir="ltr">
+          <div className="p-4 sm:p-6 space-y-6" dir="rtl">
+            {currentArticle && (
+              <div className="p-3 bg-zinc-100 border-r-2 border-black text-xs space-y-1">
+                <span className="font-bold uppercase tracking-wider text-[10px] text-zinc-500">
+                  زمینه پژوهشی فعال:
+                </span>
+                <div className="font-headline font-bold text-black text-sm truncate">
+                  {currentArticle.title}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Prompt input & suggested templates */}
           <div className="space-y-3">
@@ -233,6 +231,7 @@ export const EditorialIntelligenceModal: React.FC<EditorialIntelligenceModalProp
               </div>
             </div>
           )}
+          </div>
         </div>
 
         {/* Modal Footer */}

@@ -30,8 +30,7 @@ export const RSSModal: React.FC<RSSModalProps> = ({ isOpen, onClose }) => {
         className="bg-white border-2 border-black w-full max-w-xl shadow-2xl flex flex-col font-sans-editorial"
       >
         <div className="p-4 bg-black text-white flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Rss className="w-4 h-4 text-white" />
+          <div>
             <h3 className="font-headline font-bold text-base uppercase tracking-wider text-white">
               اشتراک خوراک خبرخوان تحریریه رادار (RSS 2.0)
             </h3>

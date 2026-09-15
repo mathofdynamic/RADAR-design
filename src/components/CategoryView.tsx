@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Article, CategoryInfo } from '../types';
-import { Bookmark, Clock, ArrowRight } from 'lucide-react';
+import { Bookmark, ArrowRight } from 'lucide-react';
 
 interface CategoryViewProps {
   category: CategoryInfo;
@@ -71,12 +71,9 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
       {dominantStory && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 hairline-b pb-10">
           <div className="lg:col-span-7 space-y-4">
-            <div className="flex items-center justify-between text-xs uppercase tracking-wider text-zinc-500">
+            <div className="flex items-center justify-between text-xs uppercase tracking-wider text-zinc-500 font-sans-editorial">
               <span className="font-bold text-black">{dominantStory.subcategory}</span>
-              <span className="flex items-center gap-1">
-                <Clock className="w-3 h-3 text-zinc-400" />
-                {dominantStory.readTime}
-              </span>
+              <span>{dominantStory.readTime}</span>
             </div>
 
             <h2

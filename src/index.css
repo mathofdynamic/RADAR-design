@@ -54,19 +54,41 @@
     --font-editorial: 'Farhang', 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
-  /* Strict editorial RTL typography defaults */
+  /* Page vertical scrollbar on the right, content in RTL */
   html {
-    direction: rtl;
-    text-align: right;
+    direction: ltr;
   }
 
   body {
+    direction: ltr;
     font-family: var(--font-editorial);
     color: #000000;
     background-color: #ffffff;
+    letter-spacing: -0.015em;
+    overflow-x: hidden;
+  }
+
+  #root {
     direction: rtl;
     text-align: right;
-    letter-spacing: -0.015em;
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  /* Clean editorial scrollbar on the right */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d4d4d8;
+    border-radius: 0px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #000000;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -115,39 +137,52 @@
   color: #000000;
 }
 
-/* Micro-rule divider */
+/* Editorial rule divider */
 .hairline-b {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid #e4e4e7;
 }
 
 .hairline-t {
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  border-top: 1px solid #e4e4e7;
 }
 
 .hairline-r {
-  border-right: 1px solid rgba(0, 0, 0, 0.15);
+  border-right: 1px solid #e4e4e7;
 }
 
 .hairline-l {
-  border-left: 1px solid rgba(0, 0, 0, 0.15);
+  border-left: 1px solid #e4e4e7;
 }
 
 .double-rule-b {
-  border-bottom: 3px double rgba(0, 0, 0, 0.85);
+  border-bottom: 3px double #000000;
 }
 
 .double-rule-t {
-  border-top: 3px double rgba(0, 0, 0, 0.85);
+  border-top: 3px double #000000;
 }
 
-/* Editorial image treatment with vibrant, authentic full colors (no grayscale) */
+/* Editorial monochrome photography system: default monochrome, subtle natural color on hover */
 .editorial-img-contrast {
-  filter: contrast(102%) saturate(104%);
-  transition: transform 0.2s ease, filter 0.2s ease;
+  filter: grayscale(100%) contrast(106%);
+  transition: filter 200ms ease;
 }
 
-.editorial-img-contrast:hover {
-  filter: contrast(105%) saturate(108%);
+.editorial-img-contrast:hover,
+article:hover .editorial-img-contrast,
+.group:hover .editorial-img-contrast {
+  filter: grayscale(0%) contrast(102%);
+}
+
+.editorial-lead-img {
+  filter: grayscale(85%) contrast(105%);
+  transition: filter 200ms ease;
+}
+
+.editorial-lead-img:hover,
+article:hover .editorial-lead-img,
+.group:hover .editorial-lead-img {
+  filter: grayscale(0%) contrast(102%);
 }
 
 /* Hide scrollbar for compact ticker scanning while retaining scroll ability */
